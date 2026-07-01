@@ -1,0 +1,10 @@
+{:itonami.blueprint/id "cloud-itonami-isco-3512"
+ :itonami.blueprint/name "Independent IT Support Practice"
+ :itonami.blueprint/isco-08 "3512"
+ :itonami.blueprint/domain :technology/it-support
+ :itonami.blueprint/license "AGPL-3.0-or-later"
+ :itonami.blueprint/social-impact [:local-jobs :data-sovereignty :digital-access]
+ :itonami.blueprint/governor :it-support-governor
+ :itonami.blueprint/robotics true
+ :itonami.blueprint/required-technologies [:robotics :identity :forms :dmn :bpmn :audit-ledger]
+ :itonami.blueprint/status :public-oss}

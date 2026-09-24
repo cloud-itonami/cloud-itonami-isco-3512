@@ -1,0 +1,31 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a support kiosk robot performs device
+;; diagnostics, cable/peripheral checks and ticket intake at client sites
+;; (ISCO 3512). Its physical work is handling client devices: lifting a
+;; laptop onto the diagnostic bench, and carrying loaner devices to desks.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-3512"
+ :cases
+ [{:id :laptop-to-diagnostic-bench
+   :kind :manipulator
+   :procedure "desktop arm lifts a client laptop from the intake slot onto the diagnostic bench"
+   :params {:l1-m 0.30 :l2-m 0.25 :m1-kg 1.5 :m2-kg 1.0
+            :from [0.40 0.05] :to [0.15 0.40] :duration-s 1.5 :steps 300}
+   :sweep {:param :payload-kg :values [0.2 0.5 1.0 2.0 3.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 15.0 :basis "estimate: continuous shoulder torque of a desktop arm (~1-3 kg class)"}
+   :boundary {:lo 0.05 :hi 10.0}}
+  {:id :loaner-device-to-desk
+   :kind :transport
+   :procedure "robot carries a loaner laptop and peripherals from the support kiosk to the client's desk"
+   :params {:mass-kg 40.0 :payload-kg 4.0 :v-max-mps 1.0 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 80.0 :crr 0.02
+            :cog-height-m 0.55 :support-half-length-m 0.25}
+   :sweep {:param :distance-m :values [20.0 50.0 100.0 150.0 250.0]}
+   :quantity :cycle-time-s
+   :limit {:max 180.0 :basis "estimate: a desk-side swap should land within 3 minutes of the ticket being approved"}
+   :boundary {:lo 5.0 :hi 600.0}}]}
